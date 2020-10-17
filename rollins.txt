@@ -1485,6 +1485,7 @@ RING DUCK
 
 does the bird go up
 RING DUCK
+
 can you take some more off
 RING
 
