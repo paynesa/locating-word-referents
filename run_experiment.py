@@ -1,8 +1,5 @@
-from curricula import get_curriculum, get_verification, load_train_test_curricula
-from typing import Tuple
-from proposebutverify import PbvLearner
+from curricula import load_train_test_curricula
 from proposebutverify.run_pbv import run_propose_but_verify
-
 
 print("Loading curricula...")
 train_curriculum, train_verification, test_curriculum, test_verification = (
