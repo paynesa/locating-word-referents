@@ -1,3 +1,5 @@
 from curricula import get_curriculum
+from proposebutverify import PbvLearner
 curriculum = get_curriculum("curricula/rollins.txt")
-print(curriculum)
+learner = PbvLearner()
+learner.observe(curriculum)
