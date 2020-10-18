@@ -1,8 +1,7 @@
 from typing import List, Tuple, Dict
 import random
 
-#TODO: handle non-1 alpha values
-
+#TODO: currently only supports alpha=1
 class PbvLearner:
     """An implementation of Propose But Verify learning model (Trueswell et al. 2013).
     Takes in two parameters, a and a_0 as defined in Trueswell et al. 2013 and
@@ -31,9 +30,12 @@ class PbvLearner:
     def observe(self, curriculum: List[Tuple[str, List[str]]]):
         """Observe the given curriculum"""
         for (language, objects) in curriculum:
+            # try to learn a meaning for each word
             for word in language.split():
+                # if there is already a hypothesis, verify it
                 if word in self._hypotheses:
                     self._verify_meaning(word, objects)
+                # otherwise, select an object at random
                 else:
                     self._select_meaning(word, objects)
         return
