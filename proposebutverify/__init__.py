@@ -9,11 +9,11 @@ class PbvLearner:
     Takes in two parameters, a and a_0 as defined in Trueswell et al. 2013 and
     both defaulting to 1, following Stevens et al. 2017"""
 
-    _alpha: int
-    _alpha_naught: int
+    _alpha: float
+    _alpha_naught: float
     _hypotheses: Dict[str, str]
 
-    def __init__(self, alpha: int = 1, alpha_naught: int = 1):
+    def __init__(self, alpha: float = 1, alpha_naught: float = 1):
         self._alpha = alpha
         self._alpha_naught = alpha_naught
         self._hypotheses = {}
@@ -43,15 +43,15 @@ class PbvLearner:
                 else:
                     self._select_meaning(word, objects)
 
-    def evaluate(self, gold_standard: List[Tuple[str, str]]) -> Tuple[int]:
+    def evaluate(self, gold_standard: List[Tuple[str, str]]) -> Tuple[float]:
         """Get the precision, recall, and f-score when comparing to the gold standard"""
         true_positives: int = 0
         for (word, meaning) in gold_standard:
             if word in self._hypotheses and self._hypotheses[word] == meaning:
                 true_positives += 1
         # precision = true positives / true positives + false positives
-        precision: int = true_positives / len(self._hypotheses)
+        precision: float = true_positives / len(self._hypotheses)
         # recall = true positives / true positives + false negatives
-        recall: int = true_positives / len(gold_standard)
-        f_score: int = 2 * (precision * recall) / (precision + recall)
+        recall: float = true_positives / len(gold_standard)
+        f_score: float = 2 * (precision * recall) / (precision + recall)
         return (precision, recall, f_score)

@@ -9,7 +9,7 @@ train_curriculum, train_verification, test_curriculum, test_verification = (
 
 learner = PursuitLearner()
 learner.observe(train_curriculum)
-learner.evaulate(train_verification)
+print(learner.evaulate(train_verification))
 
 # print("Running 1000 instances of Propose but Verify (Trueswell et al. 2017)...")
 # run_propose_but_verify(
