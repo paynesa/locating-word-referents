@@ -1,6 +1,7 @@
 from typing import List, Tuple, Dict
 import random
 
+
 class PursuitLearner:
     """An implementation of the Pursuit learning model (Stevens et al. 2017).
     Takes in three parameters: gamma (the learning rate), lamda (the smoothing
@@ -30,7 +31,7 @@ class PursuitLearner:
         """This updates a dictionary mapping meanings to the maximum strengths for each meaning.
         We update it each time a weight is updated for a given meaning in order to keep the
         most up-to-date maximum weights for mutual exclusion during initialization"""
-        updates : Dict[str, float] = {}
+        updates: Dict[str, float] = {}
         # iterate through the hypothesized meanings for each word
         for word in self._hypotheses:
             for obj in self._hypotheses[word]:
@@ -115,7 +116,7 @@ class PursuitLearner:
         """Get the conditional probabilities P(m|w) for the dictionary of meaning : weight mappings"""
         sum_Aw = sum(meanings.values())
         N = len(self._max_strengths)
-        conditional_probabilities : Dict[str, float] = {}
+        conditional_probabilities: Dict[str, float] = {}
         for word in meanings:
             Awm = meanings[word]
             # calculation of conditional probabilities from Stevens et al. 2017
@@ -134,7 +135,7 @@ class PursuitLearner:
                 else:
                     self._initialize(word, objects)
         # now, update the hypotheses to be those for which P(m|w) > Tau
-        hypotheses : Dict[str, Dict[str, float]] = {}
+        hypotheses: Dict[str, Dict[str, float]] = {}
         for word in self._hypotheses:
             # get the conditional probabilities, P(m|w)
             conditional_probabilities = self._get_conditional_probabilities(
@@ -151,7 +152,7 @@ class PursuitLearner:
         # set the global hypotheses equal to the filtered ones
         self._hypotheses = hypotheses
 
-    def evaulate(self, gold_standard: List[Tuple[str, str]]) -> Tuple[float]:
+    def evaluate(self, gold_standard: List[Tuple[str, str]]) -> Tuple[float]:
         """Get the precision, recall, and f-score when comparing to the gold standard"""
         true_positives: int = 0
         for (word, meaning) in gold_standard:
