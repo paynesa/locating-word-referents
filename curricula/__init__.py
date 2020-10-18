@@ -17,7 +17,6 @@ def get_curriculum(filepath : str)->List[Tuple[str, List[str]]]:
         i+=1
     return curriculum
 
-get_curriculum("rollins.txt")
 
 
 
