@@ -32,7 +32,7 @@ class PbvLearner:
         self._hypotheses[word] = random.choice(objects)
 
     def observe(self, curriculum: List[Tuple[str, List[str]]]):
-        """Observe the given curriculum"""
+        """Observe and learn from the given curriculum"""
         for (language, objects) in curriculum:
             # try to learn a meaning for each word
             for word in language.split():
