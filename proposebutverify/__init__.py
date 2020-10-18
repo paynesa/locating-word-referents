@@ -1,4 +1,5 @@
 from typing import List, Tuple, Dict
+import random
 
 #TODO: handle non-1 alpha values
 
@@ -18,12 +19,14 @@ class PbvLearner:
         """Verify the meaning of a word already in the lexicon. If this meaning
         isn't verified, pick a new meaning from the situation to append to the
         lexicon instead"""
-        return
+        object_to_verify : str = self._hypotheses[word]
+        if object_to_verify not in objects:
+            self._select_meaning(word, objects)
 
-    def _select_meaning(self, word: str, objects : List[str]):
+    def _select_meaning(self, word: str, objects : List[str])->None:
         """Select a new meaning at random for a word that hasn't been observed
         before"""
-        return
+        self._hypotheses[word] = random.choice(objects)
 
     def observe(self, curriculum: List[Tuple[str, List[str]]]):
         """Observe the given curriculum"""
@@ -33,5 +36,4 @@ class PbvLearner:
                     self._verify_meaning(word, objects)
                 else:
                     self._select_meaning(word, objects)
-
         return
