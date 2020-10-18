@@ -1,7 +1,8 @@
+#TODO: currently only supports alpha=1
+
 from typing import List, Tuple, Dict
 import random
 
-#TODO: currently only supports alpha=1
 class PbvLearner:
     """An implementation of Propose But Verify learning model (Trueswell et al. 2013).
     Takes in two parameters, a and a_0 as defined in Trueswell et al. 2013 and
@@ -38,7 +39,6 @@ class PbvLearner:
                 # otherwise, select an object at random
                 else:
                     self._select_meaning(word, objects)
-        return
 
     def evaluate(self, gold_standard : List[Tuple[str, str]])-> Tuple[int]:
         """Get the precision, recall, and f-score when comparing to the gold standard"""
