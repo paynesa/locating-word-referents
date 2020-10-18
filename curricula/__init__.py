@@ -18,6 +18,13 @@ def get_curriculum(filepath : str)->List[Tuple[str, List[str]]]:
     return curriculum
 
 
+def get_verification(filepath : str)->List[Tuple[str, str]]:
+    """Get verification, or gold standard, data to compare the learning output against"""
+    verification : List[str, str] = []
+    for line in open(filepath, "r"):
+        line = line.strip().split()
+        verification.append((line[0], line[1]))
+    return verification
 
 
 

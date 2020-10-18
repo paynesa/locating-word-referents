@@ -39,3 +39,20 @@ class PbvLearner:
                 else:
                     self._select_meaning(word, objects)
         return
+
+    def evaluate(self, gold_standard : List[Tuple[str, str]])-> Tuple[int]:
+        """Get the precision, recall, and f-score when comparing to the gold standard"""
+        true_positives : int = 0
+        for (word, meaning) in gold_standard:
+            if word in self._hypotheses and self._hypotheses[word] == meaning:
+                true_positives += 1
+        # precision = true positives / true positives + false positives
+        precision : int = true_positives/len(self._hypotheses)
+        # recall = true positives / true positives + false negatives
+        recall : int = true_positives/len(gold_standard)
+        f_score : int = 2*(precision*recall)/(precision+recall)
+        return (precision, recall, f_score)
+
+
+
+
