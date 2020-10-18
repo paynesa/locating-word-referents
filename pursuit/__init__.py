@@ -28,7 +28,8 @@ class PursuitLearner:
         self._max_strengths = {}
 
     def _initialize(self, word: str, objects: List[str]):
-        """Initialize the hypothesis for a word that has never been seen before"""
+        """Initialize the hypothesis for a word that has never been seen before,
+        using mutual exclusion to pick the one with the smallest existing association"""
         # get the maxiumum assocation strengths for each object
         association_strengths: Dict = {
             object: self._max_strengths[object] if object in self._max_strengths else 0
@@ -54,13 +55,43 @@ class PursuitLearner:
         if chosen_object not in self._max_strengths:
             self._max_strengths[chosen_object] = self._learning_rate
 
+    def _update_hypotheses(self, word : str, objects : List[str]):
+        """Update the hypotheses based on an instance of learning"""
+        sorted_meanings = [k for k, v in sorted(self._hypotheses[word].items(), key=lambda item: item[1], reverse=True)]
+        object_with_max_association = sorted_meanings[0]
+        max_association_value = self._hypotheses[word][object_with_max_association]
+        if object_with_max_association in objects:
+            new_association = max_association_value + self._learning_rate*(1 - max_association_value)
+            self._hypotheses[word][object_with_max_association] = new_association
+            if object_with_max_association not in self._max_strengths or self._max_strengths[object_with_max_association] < new_association:
+                self._max_strengths[object_with_max_association] = new_association
+        else :
+            new_object : str = random.choice(objects)
+            new_association = max_association_value*(1-self._learning_rate)
+            self._hypotheses[word][
+                object_with_max_association] = new_association
+            if object_with_max_association in self._max_strengths and self._max_strengths[object_with_max_association] == max_association_value:
+                self._max_strengths[object_with_max_association] = new_association
+            if new_object in self._hypotheses[word]:
+                association_value_for_object = self._hypotheses[word][new_object]
+                self._hypotheses[word][new_object] = association_value_for_object + self._learning_rate*(1-association_value_for_object)
+                if new_object not in self._max_strengths or self._max_strengths[new_object] < self._hypotheses[word][new_object]:
+                    self._max_strengths[new_object] = self._hypotheses[word][new_object]
+            else:
+                self._hypotheses[word][new_object] = self._learning_rate
+                if new_object not in self._max_strengths or self._max_strengths[new_object] < self._learning_rate:
+                    self._max_strengths[new_object] = self._learning_rate
+
+
+
+
+
     def observe(self, curriculum: List[Tuple[str, List[str]]]):
         """Observe and learn from the given curriculum"""
         for (language, objects) in curriculum:
             for word in language.split():
                 if word in self._hypotheses:
-                    # TODO: implement learning
-                    continue
+                    self._update_hypotheses(word, objects)
                 else:
                     self._initialize(word, objects)
 
