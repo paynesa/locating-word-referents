@@ -1,6 +1,7 @@
 from curricula import load_train_test_curricula
 from pursuit import PursuitLearner
 from proposebutverify import PbvLearner
+from crosssituational import CrossSituationalLearner
 
 
 def run_experiment(
@@ -55,12 +56,14 @@ train_curriculum, train_verification, test_curriculum, test_verification = (
     load_train_test_curricula()
 )
 
-print("Running 1000 instances of Propose but Verify (Trueswell et al. 2017)...")
-run_experiment(
-    PbvLearner, train_curriculum, train_verification, test_curriculum, test_verification, 1000
-)
-
-print("Running 1000 instances of Pursuit (Stevens et al. 2017)...")
-run_experiment(
-    PursuitLearner, train_curriculum, train_verification, test_curriculum, test_verification, 1000
-)
+learner = CrossSituationalLearner()
+learner.observe(train_curriculum)
+# print("Running 1000 instances of Propose but Verify (Trueswell et al. 2017)...")
+# run_experiment(
+#     PbvLearner, train_curriculum, train_verification, test_curriculum, test_verification, 1000
+# )
+#
+# print("Running 1000 instances of Pursuit (Stevens et al. 2017)...")
+# run_experiment(
+#     PursuitLearner, train_curriculum, train_verification, test_curriculum, test_verification, 1000
+# )
