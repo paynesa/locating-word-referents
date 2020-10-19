@@ -58,6 +58,7 @@ train_curriculum, train_verification, test_curriculum, test_verification = (
 
 learner = CrossSituationalLearner()
 learner.observe(train_curriculum)
+print(learner.evaluate(train_verification))
 # print("Running 1000 instances of Propose but Verify (Trueswell et al. 2017)...")
 # run_experiment(
 #     PbvLearner, train_curriculum, train_verification, test_curriculum, test_verification, 1000
