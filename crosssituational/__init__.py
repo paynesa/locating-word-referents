@@ -37,7 +37,7 @@ class CrossSituationalLearner:
             if meaning in self._hypotheses[word]:
                 denominator += self._hypotheses[word][meaning]
         # return the conditional probability P(w, m)
-        return numerator/denominator
+        return numerator / denominator
 
     def _learn_from(self, word: str, objects: List[str]):
         """Learns from a given word and set of objects"""
@@ -45,14 +45,16 @@ class CrossSituationalLearner:
         if word not in self._hypotheses:
             self._hypotheses[word] = {}
         # get the conditional probabilities P(w|m) for each m in the scene
-        probabilities : List[float] = [self._get_conditional_probability(word, object) for object in objects]
+        probabilities: List[float] = [
+            self._get_conditional_probability(word, object) for object in objects
+        ]
         # for each object, increment its association by the alignment value
-        i : int = 0
+        i: int = 0
         while i < len(objects):
             if objects[i] not in self._hypotheses[word]:
                 self._hypotheses[word][objects[i]] = 0
             # Increment association by Alignment(w, m) = P(w|m) / [sum for m’ in MU (P(w|m’))]
-            self._hypotheses[word][objects[i]] += probabilities[i]/sum(probabilities)
+            self._hypotheses[word][objects[i]] += probabilities[i] / sum(probabilities)
             i += 1
 
     def observe(self, curriculum: List[Tuple[str, List[str]]]):
@@ -60,10 +62,12 @@ class CrossSituationalLearner:
         for (language, objects) in curriculum:
             for word in language.split():
                 self._learn_from(word, objects)
-        final_hypotheses : Dict[str, Dict[str, float]] = {}
+        final_hypotheses: Dict[str, Dict[str, float]] = {}
         for word in self._hypotheses:
             for meaning in self._hypotheses[word]:
-                conditional_probability = self._get_conditional_probability(word, meaning)
+                conditional_probability = self._get_conditional_probability(
+                    word, meaning
+                )
                 if conditional_probability >= self._threshold:
                     if word not in final_hypotheses:
                         final_hypotheses[word] = {}

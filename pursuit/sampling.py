@@ -76,21 +76,25 @@ class PursuitWithSampling:
         """Update the hypotheses based on an instance of learning"""
         # get the meanings in order of decreasing probability
         sorted_meanings = {
-            k : v
+            k: v
             for k, v in sorted(
                 self._hypotheses[word].items(), key=lambda item: item[1], reverse=True
             )
         }
         # iterate in order of decreasing probability and reward if object in scene
-        done : bool = False
+        done: bool = False
         for object in sorted_meanings:
             association_for_object = sorted_meanings[object]
             if object in objects:
                 done = True
-                new_association = association_for_object + self._learning_rate * (1 - association_for_object)
+                new_association = association_for_object + self._learning_rate * (
+                    1 - association_for_object
+                )
                 self._hypotheses[word][object] = new_association
-            else :
-                self._hypotheses[word][object] = association_for_object * (1 - self._learning_rate)
+            else:
+                self._hypotheses[word][object] = association_for_object * (
+                    1 - self._learning_rate
+                )
             self._update_maximum_strengths(object)
         # if none of the objects hypothesized are in the scene, select a new one at random
         if not done:

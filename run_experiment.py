@@ -59,26 +59,47 @@ train_curriculum, train_verification, test_curriculum, test_verification = (
 
 print("Running 1000 instances of Propose but Verify (Trueswell et al. 2017)...")
 run_experiment(
-    PbvLearner, train_curriculum, train_verification, test_curriculum, test_verification, 1000
+    PbvLearner,
+    train_curriculum,
+    train_verification,
+    test_curriculum,
+    test_verification,
+    1000,
 )
 
-print("Running the Cross-Situational Learning model that makes use of P(w|m) (Stevens et al. 2017)...")
+print(
+    "Running the Cross-Situational Learning model that makes use of P(w|m) (Stevens et al. 2017)..."
+)
 learner = CrossSituationalLearner()
 learner.observe(train_curriculum)
 train_precision, train_recall, train_f = learner.evaluate(train_verification)
-print(f"\t Training average precision: {train_precision}, recall: {train_recall}, f-score: {train_f}")
+print(
+    f"\t Training average precision: {train_precision}, recall: {train_recall}, f-score: {train_f}"
+)
 learner = CrossSituationalLearner()
 learner.observe(test_curriculum)
 test_precision, test_recall, test_f = learner.evaluate(test_verification)
-print(f"\t Testing average precision: {test_precision}, recall: {test_recall}, f-score: {test_f}")
+print(
+    f"\t Testing average precision: {test_precision}, recall: {test_recall}, f-score: {test_f}"
+)
 
 
 print("Running 1000 instances of Pursuit (Stevens et al. 2017)...")
 run_experiment(
-    PursuitLearner, train_curriculum, train_verification, test_curriculum, test_verification, 1000
+    PursuitLearner,
+    train_curriculum,
+    train_verification,
+    test_curriculum,
+    test_verification,
+    1000,
 )
 
 print("Running 1000 instances of Pursuit with sampling...")
 run_experiment(
-    PursuitWithSampling, train_curriculum, train_verification, test_curriculum, test_verification, 1000
+    PursuitWithSampling,
+    train_curriculum,
+    train_verification,
+    test_curriculum,
+    test_verification,
+    1000,
 )

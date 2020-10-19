@@ -13,17 +13,20 @@ class PursuitLearner:
     _lexicalization_threshold: float
     _hypotheses: Dict[str, Dict[str, float]]
     _max_strengths: Dict[str, float]
+    _sample: bool
 
     def __init__(
         self,
         gamma_learning_rate: float = 0.02,
         lambda_smoothing: float = 0.001,
         tau_lexicalization: float = 0.79,
+        sample: bool = False,
     ):
         """Initialize a pursuit learner with the given learning rate, smoothing factor, and lexicalization threshold"""
         self._learning_rate = gamma_learning_rate
         self._smoothing_factor = lambda_smoothing
         self._lexicalization_threshold = tau_lexicalization
+        self._sample = sample
         self._hypotheses = {}
         self._max_strengths = {}
 
@@ -72,26 +75,38 @@ class PursuitLearner:
 
     def _update_hypotheses(self, word: str, objects: List[str]):
         """Update the hypotheses based on an instance of learning"""
+        # TODO: check this for correctness
+        # if sampling, sample based on association
+        if self._sample:
+            object_to_consider = random.choices(
+                population=[key for key, value in self._hypotheses[word].items()],
+                weights=[val for key, value in self._hypotheses[word].items()],
+                k=1,
+            )[0]
+            max_association_value = self._hypotheses[word][object_to_consider]
         # get the object with maximum association for a given word
-        sorted_meanings = [
-            k
-            for k, v in sorted(
-                self._hypotheses[word].items(), key=lambda item: item[1], reverse=True
-            )
-        ]
-        object_with_max_association = sorted_meanings[0]
-        # get the association value for this object
-        max_association_value = self._hypotheses[word][object_with_max_association]
+        else:
+            sorted_meanings = [
+                k
+                for k, v in sorted(
+                    self._hypotheses[word].items(),
+                    key=lambda item: item[1],
+                    reverse=True,
+                )
+            ]
+            object_to_consider = sorted_meanings[0]
+            # get the association value for this object
+            max_association_value = self._hypotheses[word][object_to_consider]
         # reward the object if it is in the observed objects
-        if object_with_max_association in objects:
+        if object_to_consider in objects:
             new_association = max_association_value + self._learning_rate * (
                 1 - max_association_value
             )
-            self._hypotheses[word][object_with_max_association] = new_association
+            self._hypotheses[word][object_to_consider] = new_association
         # otherwise, penalize it
         else:
             new_association = max_association_value * (1 - self._learning_rate)
-            self._hypotheses[word][object_with_max_association] = new_association
+            self._hypotheses[word][object_to_consider] = new_association
             # select a new object at random to be the chosen object in the scene
             new_object: str = random.choice(objects)
             # if we have already hypothesized this object for this word, reward
@@ -108,7 +123,7 @@ class PursuitLearner:
             # update the maximum strengths corresponding to the new object
             self._update_maximum_strengths(new_object)
         # update the maximum strengths corresponding to the object that was either rewarded or penalized
-        self._update_maximum_strengths(object_with_max_association)
+        self._update_maximum_strengths(object_to_consider)
 
     def _get_conditional_probabilities(
         self, meanings: Dict[str, float]
