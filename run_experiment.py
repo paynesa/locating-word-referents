@@ -2,6 +2,7 @@ from curricula import load_train_test_curricula
 from pursuit import PursuitLearner
 from proposebutverify import PbvLearner
 from crosssituational import CrossSituationalLearner
+from pursuit.sampling import PursuitWithSampling
 
 
 def run_experiment(
@@ -75,4 +76,9 @@ print(f"\t Testing average precision: {test_precision}, recall: {test_recall}, f
 print("Running 1000 instances of Pursuit (Stevens et al. 2017)...")
 run_experiment(
     PursuitLearner, train_curriculum, train_verification, test_curriculum, test_verification, 1000
+)
+
+print("Running 1000 instances of Pursuit with sampling...")
+run_experiment(
+    PursuitWithSampling, train_curriculum, train_verification, test_curriculum, test_verification, 1000
 )
