@@ -175,6 +175,8 @@ class PursuitLearner:
 
     def evaluate(self, gold_standard: List[Tuple[str, str]]) -> Tuple[float]:
         """Get the precision, recall, and f-score when comparing to the gold standard"""
+        if not self._hypotheses:
+            return (0, 0, 0)
         true_positives: int = 0
         for (word, meaning) in gold_standard:
             if word in self._hypotheses and meaning in self._hypotheses[word]:
@@ -183,5 +185,7 @@ class PursuitLearner:
         precision: float = true_positives / len(self._hypotheses)
         # recall = true positives / true positives + false negatives
         recall: float = true_positives / len(gold_standard)
-        f_score: float = 2 * (precision * recall) / (precision + recall)
+        f_score: float = 2 * (precision * recall) / (
+            precision + recall
+        ) if precision + recall > 0 else 0
         return (precision, recall, f_score)
