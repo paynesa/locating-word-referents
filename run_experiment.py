@@ -11,7 +11,7 @@ def run_experiment(
     test_curriculum,
     test_verification,
     num_iterations: int = 1000,
-    pursuit_sampling : bool = False
+    pursuit_sampling: bool = False,
 ):
     """Runs num_iterations of the propose-but-verify learner and prints out the
     precision, recall, and f-score for the training and testing data"""
@@ -109,5 +109,5 @@ run_experiment(
     test_curriculum,
     test_verification,
     1000,
-    pursuit_sampling=True
+    pursuit_sampling=True,
 )

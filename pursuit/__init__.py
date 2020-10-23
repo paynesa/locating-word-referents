@@ -77,10 +77,16 @@ class PursuitLearner:
         """Update the hypotheses based on an instance of learning"""
         # if sampling, sample based on conditional probability
         if self._sample:
-            conditional_probabilities_for_word = self._get_conditional_probabilities(self._hypotheses[word])
+            conditional_probabilities_for_word = self._get_conditional_probabilities(
+                self._hypotheses[word]
+            )
             object_to_consider = random.choices(
-                population=[key for key, value in conditional_probabilities_for_word.items()],
-                weights=[value for key, value in conditional_probabilities_for_word.items()],
+                population=[
+                    key for key, value in conditional_probabilities_for_word.items()
+                ],
+                weights=[
+                    value for key, value in conditional_probabilities_for_word.items()
+                ],
                 k=1,
             )[0]
             max_association_value = self._hypotheses[word][object_to_consider]
