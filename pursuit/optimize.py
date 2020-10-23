@@ -58,7 +58,6 @@ def run_pursuit_experiment(
 ):
     """Runs num_iterations of the pursuit learner and prints out the
     precision, recall, and f-score for the training and testing data"""
-    print("Loading curricula...")
     train_curriculum, train_verification, test_curriculum, test_verification = (
         load_train_test_curricula()
     )
