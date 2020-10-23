@@ -2,7 +2,6 @@ from curricula import load_train_test_curricula
 from pursuit import PursuitLearner
 from proposebutverify import PbvLearner
 from crosssituational import CrossSituationalLearner
-from pursuit.sampling import PursuitWithSampling
 
 
 def run_experiment(
@@ -12,6 +11,7 @@ def run_experiment(
     test_curriculum,
     test_verification,
     num_iterations: int = 1000,
+    pursuit_sampling : bool = False
 ):
     """Runs num_iterations of the propose-but-verify learner and prints out the
     precision, recall, and f-score for the training and testing data"""
@@ -23,14 +23,20 @@ def run_experiment(
     test_f_score = 0
     for i in range(num_iterations):
         # train and evaluate the learner on the training data
-        learner = learner_input()
+        if learner_input == PursuitLearner and pursuit_sampling:
+            learner = learner_input(sample=True)
+        else:
+            learner = learner_input()
         learner.observe(train_curriculum)
         p, r, f = learner.evaluate(train_verification)
         train_precision += p
         train_recall += r
         train_f_score += f
         # train and evaluate the learner on the testing data
-        learner = learner_input()
+        if learner_input == PursuitLearner and pursuit_sampling:
+            learner = learner_input(sample=True)
+        else:
+            learner = learner_input()
         learner.observe(test_curriculum)
         p, r, f = learner.evaluate(test_verification)
         test_precision += p
@@ -94,12 +100,14 @@ run_experiment(
     1000,
 )
 
+
 print("Running 1000 instances of Pursuit with sampling...")
 run_experiment(
-    PursuitWithSampling,
+    PursuitLearner,
     train_curriculum,
     train_verification,
     test_curriculum,
     test_verification,
     1000,
+    pursuit_sampling=True
 )
