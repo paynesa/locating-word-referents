@@ -3,7 +3,7 @@ from crosssituational import CrossSituationalLearner
 from curricula import load_train_test_curricula
 
 # get the optimized paramters
-print("Getting optimized paramters over 100 instances for pursuit without sampling...")
+print("Getting optimized parameters for the cross-situational learner...")
 best_beta, best_lamda, best_threshold = optimize_xsit()
 print(f"\nBest parameters: {best_beta}, {best_lamda}, {best_threshold}")
 

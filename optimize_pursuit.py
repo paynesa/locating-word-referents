@@ -1,6 +1,6 @@
 from pursuit.optimize import optimize_pursuit, run_pursuit_experiment
 
-print("Getting optimized paramters over 100 instances for pursuit without sampling...")
+print("Getting optimized parameters over 100 instances for pursuit without sampling...")
 best_gamma, best_lamda, best_threshold = optimize_pursuit(False, 100)
 print(f"\nBest parameters: {best_gamma}, {best_lamda}, {best_threshold}")
 
