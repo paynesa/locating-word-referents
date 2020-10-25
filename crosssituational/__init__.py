@@ -59,10 +59,12 @@ class CrossSituationalLearner:
 
     def observe(self, curriculum: List[Tuple[str, List[str]]]):
         """Observe and learn from the given curriculum"""
+        # observe and learn from each instance in the curriculum
         for (language, objects) in curriculum:
             for word in language.split():
                 self._learn_from(word, objects)
         final_hypotheses: Dict[str, Dict[str, float]] = {}
+        # update the hypotheses to contain only those that pass the threshold
         for word in self._hypotheses:
             for meaning in self._hypotheses[word]:
                 conditional_probability = self._get_conditional_probability(

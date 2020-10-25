@@ -1,4 +1,4 @@
-# TODO: currently only supports alpha=1
+# TODO: currently only supports alpha, alpha_0=1
 
 from typing import List, Tuple, Dict
 import random
