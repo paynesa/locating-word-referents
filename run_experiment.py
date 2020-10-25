@@ -92,10 +92,20 @@ print(
 
 
 print("Running 1000 instances of Pursuit (Stevens et al. 2017)...")
-run_pursuit_experiment(gamma_learning_rate=0.02, lambda_smothing=0.001, threshold=0.79, num_iterations=1000, pursuit_sampling=False)
+run_pursuit_experiment(
+    gamma_learning_rate=0.02,
+    lambda_smothing=0.001,
+    threshold=0.79,
+    num_iterations=1000,
+    pursuit_sampling=False,
+)
 
 
 print("Running 1000 instances of Pursuit with sampling...")
-run_pursuit_experiment(gamma_learning_rate=0.02, lambda_smothing=0.001, threshold=0.79, num_iterations=1000, pursuit_sampling=True)
-
-
+run_pursuit_experiment(
+    gamma_learning_rate=0.02,
+    lambda_smothing=0.001,
+    threshold=0.79,
+    num_iterations=1000,
+    pursuit_sampling=True,
+)
