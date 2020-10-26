@@ -16,7 +16,7 @@ retrieved for a word is retrieved based on the probabilities of each meaning, ra
 the original pursuit model always selects the meaning candidate with highest probability.
 
 The `curricula` module provides the annotated Rollins data of child-directed speech along with objects in the scene
-that is used by Stevens et al. (2017) and our models as well.
+that is used by Stevens et al. (2017), as well as our models. 
 
 ## Running the Code
 
@@ -26,4 +26,4 @@ To find the optimal parameters for Pursuit and run an experiment with these para
 This code currently optimizes Pursuit without Sampling but can easily be edited to optimize Pursuit with Sampling 
 by changing both boolean values in the file to `True`. 
 
-To find the optimal parameters for the Modified Cross-Situational learner, runn `python3 optimize_xsit.py`
+To find the optimal parameters for the Modified Cross-Situational learner, run `python3 optimize_xsit.py`
