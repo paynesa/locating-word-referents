@@ -23,7 +23,7 @@ that is used by Stevens et al. (2017), as well as our models.
 To run all learners with the parameters from Stevens et al. (2017), run: `python3 run_experiment.py`
 
 To find the optimal parameters for Pursuit and run an experiment with these parameters, run: `python3 optimize_pursuit.py`.
-This code currently optimizes Pursuit without Sampling but can easily be edited to optimize Pursuit with Sampling 
+This code currently optimizes original Pursuit but can easily be edited to optimize Pursuit with Sampling 
 by changing both boolean values in the file to `True`. 
 
 To find the optimal parameters for the Modified Cross-Situational learner, run `python3 optimize_xsit.py`
