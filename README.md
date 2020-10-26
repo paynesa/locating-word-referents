@@ -15,12 +15,15 @@ Sampling or the original Pursuit learner. Pursuit with Sampling is like original
 retrieved for a word is retrieved based on the probabilities of each meaning, rather than deterministically selected; 
 the original pursuit model always selects the meaning candidate with highest probability.
 
+The `curricula` module provides the annotated Rollins data of child-directed speech along with objects in the scene
+that is used by Stevens et al. (2017) and our models as well.
+
 ## Running the Code
 
 To run all learners with the parameters from Stevens et al. (2017), run: `python3 run_experiment.py`
 
 To find the optimal parameters for Pursuit and run an experiment with these parameters, run: `python3 optimize_pursuit.py`.
 This code currently optimizes Pursuit without Sampling but can easily be edited to optimize Pursuit with Sampling 
-by changing both boolean values in the file to True. 
+by changing both boolean values in the file to `True`. 
 
-To find the optimal paramters for the Modified Cross-Situational learner, runn `python3 optimize_xsit.py`
+To find the optimal parameters for the Modified Cross-Situational learner, runn `python3 optimize_xsit.py`
