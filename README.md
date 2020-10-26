@@ -12,8 +12,8 @@ Stevens et al. (2017).
 Finally the `pursuit` module provides an implementation of the Pursuit learner proposed by Stevens et al. 2017. 
 This learner additionally contains an optional sampling parameter allowing for the implementation of Pursuit with
 Sampling or the original Pursuit learner. Pursuit with Sampling is like original Pursuit except that the meaning
-retrieved for a word is retrieved based on the probabilities of each meaning, rather than deterministically selecting
-the meaning with highest probability as Stevens et al. (2017) propose. 
+retrieved for a word is retrieved based on the probabilities of each meaning, rather than deterministically selected; 
+the original pursuit model always selects the meaning candidate with highest probability.
 
 ## Running the Code
 
