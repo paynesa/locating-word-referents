@@ -3,7 +3,7 @@ This code contains three modules corresponding to three models of word-referent 
 Propose-but-Verify, Pursuit, and Cross-Situational Learning. 
 
 The `crosssituational` module provides an implementation of the modified Cross-Situational learner that uses 
-`P(m|w)` in Stevens et al. (2017). This learner is a modified version of the one presented in Fazly et al. (2010).
+`P(w|m)` in Stevens et al. (2017). This learner is a modified version of the one presented in Fazly et al. (2010).
 
 The `proposebutverify` module provides an implementation of the Propose-but-Verify learner as proposed by 
 Trueswell et al. (2013). Currently, only `a, a_0 = 1` are supported, since these are the parameters used by
