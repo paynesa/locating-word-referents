@@ -36,3 +36,11 @@ def load_train_test_curricula() -> Tuple:
         get_curriculum("curricula/test.txt"),
         get_verification("curricula/test.gold"),
     )
+
+
+def load_rollins() -> Tuple:
+    """Loads in the Rollins file and the gold"""
+    return (
+        get_curriculum("curricula/rollins.txt"),
+        get_verification("curricula/gold.txt")
+    )

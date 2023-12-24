@@ -30,7 +30,7 @@ class PursuitLearner:
         self._hypotheses = {}
         self._max_strengths = {}
 
-    def _update_maximum_strengths(self, object: str):
+    def _update_maximum_strengths(self, the_object: str):
         """This updates a dictionary mapping meanings to the maximum strengths for each meaning.
         We update it each time a weight is updated for a given meaning in order to keep the
         most up-to-date maximum weights for mutual exclusion during initialization"""
@@ -38,8 +38,8 @@ class PursuitLearner:
         # iterate through the hypothesized meanings for each word
         for word in self._hypotheses:
             for obj in self._hypotheses[word]:
-                if obj == object:
-                    # if we have a new maximum assocation for the meaning, update the dictionary
+                if obj == the_object:
+                    # if we have a new maximum association for the meaning, update the dictionary
                     if obj not in updates or updates[obj] < self._hypotheses[word][obj]:
                         updates[obj] = self._hypotheses[word][obj]
         # update the max strengths dictionary to reflect these updates
@@ -49,10 +49,10 @@ class PursuitLearner:
     def _initialize(self, word: str, objects: List[str]):
         """Initialize the hypothesis for a word that has never been seen before,
         using mutual exclusion to pick the one with the smallest existing association"""
-        # get the maxiumum assocation strengths for each object
+        # get the maximum association strengths for each object
         association_strengths: Dict = {
-            object: self._max_strengths[object] if object in self._max_strengths else 0
-            for object in objects
+            obj: self._max_strengths[obj] if obj in self._max_strengths else 0
+            for obj in objects
         }
         # get the minimum association strength of all of them to maintain mutual exclusivity
         min_strength = [
@@ -176,7 +176,7 @@ class PursuitLearner:
     def evaluate(self, gold_standard: List[Tuple[str, str]]) -> Tuple[float]:
         """Get the precision, recall, and f-score when comparing to the gold standard"""
         if not self._hypotheses:
-            return (0, 0, 0)
+            return 0.0, 0.0, 0.0
         true_positives: int = 0
         for (word, meaning) in gold_standard:
             if word in self._hypotheses and meaning in self._hypotheses[word]:
@@ -188,4 +188,4 @@ class PursuitLearner:
         f_score: float = 2 * (precision * recall) / (
             precision + recall
         ) if precision + recall > 0 else 0
-        return (precision, recall, f_score)
+        return precision, recall, f_score

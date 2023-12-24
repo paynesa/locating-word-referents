@@ -6,8 +6,7 @@ The `crosssituational` module provides an implementation of the modified Cross-S
 `P(w|m)` in Stevens et al. (2017). This learner is a modified version of the one presented in Fazly et al. (2010).
 
 The `proposebutverify` module provides an implementation of the Propose-but-Verify learner as proposed by 
-Trueswell et al. (2013). Currently, only `a, a_0 = 1` are supported, since these are the parameters used by
-Stevens et al. (2017).
+Trueswell et al. (2013). 
 
 Finally the `pursuit` module provides an implementation of the Pursuit learner proposed by Stevens et al. 2017. 
 This learner additionally contains an optional sampling parameter allowing for the implementation of Pursuit with
@@ -20,7 +19,7 @@ that is used by Stevens et al. (2017), as well as our models.
 
 ## Running the Code
 
-To run all learners with the parameters from Stevens et al. (2017), run: `python3 run_experiment.py`
+To run all learners with the parameters from Stevens et al. (2017), run: `python3 run_all.py`
 
 To find the optimal parameters for Pursuit and run an experiment with these parameters, run: `python3 optimize_pursuit.py`.
 This code currently optimizes original Pursuit but can easily be edited to optimize Pursuit with Sampling 

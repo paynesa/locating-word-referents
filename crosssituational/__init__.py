@@ -31,7 +31,7 @@ class CrossSituationalLearner:
             if word in self._hypotheses and meaning in self._hypotheses[word]
             else 0
         )
-        # intilalize the denominator to be beta*lambda, then iterate through and add each A(w', m)
+        # initialize the denominator to be beta*lambda, then iterate through and add each A(w', m)
         denominator = self._beta * self._smoothing
         for word in self._hypotheses:
             if meaning in self._hypotheses[word]:
@@ -41,19 +41,19 @@ class CrossSituationalLearner:
 
     def _learn_from(self, word: str, objects: List[str]):
         """Learns from a given word and set of objects"""
-        # add the word to our internal state of hypotheses
+        # add the word to our internal state of hypotheses if it isn't already there
         if word not in self._hypotheses:
             self._hypotheses[word] = {}
-        # get the conditional probabilities P(w|m) for each m in the scene
+        # get the conditional probabilities P(w|m) for each meaning m in the scene
         probabilities: List[float] = [
-            self._get_conditional_probability(word, object) for object in objects
+            self._get_conditional_probability(word, obj) for obj in objects
         ]
-        # for each object, increment its association by the alignment value
+        # for each meaning m, increment its association by the alignment value
         i: int = 0
         while i < len(objects):
             if objects[i] not in self._hypotheses[word]:
                 self._hypotheses[word][objects[i]] = 0
-            # Increment association by Alignment(w, m) = P(w|m) / [sum for m’ in MU (P(w|m’))]
+            # increment association by Alignment(w, m) = P(w|m) / [sum for m’ in MU (P(w|m’))]
             self._hypotheses[word][objects[i]] += probabilities[i] / sum(probabilities)
             i += 1
 
@@ -79,16 +79,16 @@ class CrossSituationalLearner:
     def evaluate(self, gold_standard: List[Tuple[str, str]]) -> Tuple[float]:
         """Get the precision, recall, and f-score when comparing to the gold standard"""
         if not self._hypotheses:
-            return (0, 0, 0)
-        true_positives: int = 0
+            return 0.0, 0.0, 0.0
+        number_correct: int = 0
         for (word, meaning) in gold_standard:
             if word in self._hypotheses and meaning in self._hypotheses[word]:
-                true_positives += 1
-        # precision = true positives / true positives + false positives
-        precision: float = true_positives / len(self._hypotheses)
-        # recall = true positives / true positives + false negatives
-        recall: float = true_positives / len(gold_standard)
+                number_correct += 1
+        # precision = number correct / total number of learned words
+        precision: float = number_correct / len(self._hypotheses)
+        # recall = number correct / total number of words in gold
+        recall: float = number_correct / len(gold_standard)
         f_score: float = 2 * (precision * recall) / (
             precision + recall
         ) if precision + recall > 0 else 0
-        return (precision, recall, f_score)
+        return precision, recall, f_score
